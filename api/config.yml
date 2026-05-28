@@ -1,0 +1,121 @@
+env: production
+
+cors:
+  local:
+    - "*"
+  staging:
+    - "http://localhost:3000"
+    - "http://localhost:8080"
+    - "http://127.0.0.1:8080"
+    - "http://127.0.0.1:3000"
+    - "https://carbon-lens-app-staging-707753137274.us-central1.run.app"
+  production:
+    - "http://localhost:3000"
+    - "http://localhost:8080"
+    - "http://127.0.0.1:8080"
+    - "http://127.0.0.1:3000"
+    - "https://carbon-lens-app-staging-707753137274.us-central1.run.app"
+    - "https://carbon-lens-app-707753137274.us-central1.run.app"
+
+api_description: |
+  This API provides access to high-resolution Senegal Carbon Stock Maps generated using machine learning and multi-source satellite data (Sentinel-1, Sentinel-2, DEM) combined with field observations.
+
+  It enables users to explore, visualize, and analyze carbon stock information through various endpoints.
+
+  ### Key Features
+
+  - List available carbon stock map dates (in YYYY-MM format)
+  - Download a carbon stock map for a specific date as a COG file
+  - Retrieve all available region, department, commune, and protected area names
+  - Download a specific region, department, commune, or protected area boundary as GeoJSON
+  - Access map tiles by date and region, by date and department, by date and commune, or by date and protected area
+  - Get national-level carbon stock statistics for a given date
+  - Get region-level, department-level, commune-level, and protected area-level carbon stock statistics for a given date
+  - Search for a region, department, commune, or protected area by a name query
+  - Export carbon stock data for regions, departments, communes, or protected areas and date as a CSV file
+  - Get carbon stock statistics for an area uploaded as a GeoJSON file
+  - Get watercourses raster link
+  - Get carbon stock legend information
+
+router_prefixes:
+  catalog: "/catalog"
+  geo: "/geo"
+  tiles: "/tiles"
+  files: "/files"
+  legend: "/legend"
+
+data_index_path: "https://storage.googleapis.com/carbonlens-bucket/v1/senegal/data_index.csv"
+
+geo:
+  regions_base: "regions"
+  departments_base: "departments"
+  communes_base: "communes"
+  protected_areas_base: "protected_areas"
+  regions_file: "https://storage.googleapis.com/carbonlens-bucket/v1/senegal/regions/senegal_regions_preds_{date}.geojson"
+  departments_file: "https://storage.googleapis.com/carbonlens-bucket/v1/senegal/departments/senegal_departments_preds_{date}.geojson"
+  communes_file: "https://storage.googleapis.com/carbonlens-bucket/v1/senegal/communes/senegal_communes_preds_{date}.geojson"
+  protected_areas_file: "https://storage.googleapis.com/carbonlens-bucket/v1/senegal/protected_areas/senegal_protected_areas_preds_{date}.geojson"
+  region_property: "NAME_1"
+  department_property: "NAME_2"
+  commune_property: "NAME_4"
+  protected_areas_property: "NAME"
+
+scale:
+  vmin: 0
+  vmax: 200
+
+zoom:
+  min: 0
+  max: 28
+
+nodata: -9999
+
+gcs:
+  bucket: "carbonlens-bucket"
+  prefix: "v1/senegal"
+
+watercourses: "https://storage.googleapis.com/carbonlens-bucket/v1/senegal/maps/watercourses.tif"
+
+carbon_classes:
+  - order: 1
+    min: 0
+    max: 5
+    color: "#210133"
+    name: "OL"
+    meaning: "Open Land"
+    description: "Zone défrichée, couverte d'herbes ou de cultures, avec très peu de végétation ligneuse."
+  - order: 2
+    min: 5
+    max: 10
+    color: "#3E3A82"
+    name: "S"
+    meaning: "Scrub"
+    description: "Zone anciennement forestière, dominée par arbustes, herbes et faible couvert végétal."
+  - order: 3
+    min: 10
+    max: 15
+    color: "#257A8B"
+    name: "YRF"
+    meaning: "Young Regenerating Forest"
+    description: "Forêt perturbée en cours de régénération, dominée par des arbres jeunes (10–30 cm) et des espèces pionnières."
+  - order: 4
+    min: 15
+    max: 20
+    color: "#66BB6A"
+    name: "LDF"
+    meaning: "Low Density Forest"
+    description: "Forêt à couvert ouvert, avec moins d'arbres matures et une biomasse plus faible, souvent plus perturbée."
+  - order: 5
+    min: 20
+    max: 25
+    color: "#27A97D"
+    name: "MDF"
+    meaning: "Medium Density Forest"
+    description: "Forêt à couvert partiellement ouvert, avec mélange d'arbres matures et jeunes, et une biomasse intermédiaire."
+  - order: 6
+    min: 25
+    max: "Infinity"
+    color: "#1B5E20"
+    name: "HDF"
+    meaning: "High Density Forest"
+    description: "Forêt naturelle à couvert fermé, avec forte biomasse et arbres matures (>30 cm), dominée par des espèces stables."

@@ -1,0 +1,31 @@
+# Custom
+.qodo/
+notebooks/
+secrets/
+
+# Ignore git files
+.git
+.gitignore
+
+# Ignore Python cache directories and files
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environments
+env/
+venv/
+.venv/
+
+# Ignore build artifacts
+build/
+dist/
+*.egg-info
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore pip cache
+pip-log.txt

@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:13.22-alpine3.21
+    container_name: carbon-lens-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: carbon_lens_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - carbon-lens-postgres-data:/var/lib/postgresql/data
+    networks:
+      - carbon-lens-networks
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - carbon-lens-networks
+
+networks:
+  carbon-lens-networks:
+    driver: bridge
+
+volumes:
+  carbon-lens-postgres-data:

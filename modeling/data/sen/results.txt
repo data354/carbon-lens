@@ -1,0 +1,5 @@
+Best model : RandomForest
+   CV R²  (Optuna) = 0.5511
+   R²  test        = 0.5201
+   RMSE test       = 11.06 t/ha
+   MAE  test       = 7.42 t/ha
