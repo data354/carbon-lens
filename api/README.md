@@ -265,12 +265,12 @@ The API uses the following carbon stock classification:
 
 | Class | Name | Range (Mg C/ha) | Meaning |
 |----|----|----|----|
-| OL | Open Land | 0 – 5 | Cleared land, very little woody vegetation |
-| S | Scrub | 5 – 10 | Former forest dominated by shrubs |
-| YRF | Young Regenerating Forest | 10 – 15 | Disturbed forest in regeneration |
-| LDF | Low Density Forest | 15 – 20 | Open canopy, lower biomass |
-| MDF | Medium Density Forest | 20 – 25 | Partially open canopy, intermediate biomass |
-| HDF | High Density Forest | > 25 | Closed canopy, high biomass, mature trees |
+| OL | Open Land | 0 – 3 | Cleared land, very little woody vegetation |
+| S | Scrub | 3 – 6 | Former forest dominated by shrubs |
+| YRF | Young Regenerating Forest | 6 – 9 | Disturbed forest in regeneration |
+| LDF | Low Density Forest | 9 – 12 | Open canopy, lower biomass |
+| MDF | Medium Density Forest | 12 – 15 | Partially open canopy, intermediate biomass |
+| HDF | High Density Forest | > 15 | Closed canopy, high biomass, mature trees |
 
 
 ## CORS
