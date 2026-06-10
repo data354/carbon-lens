@@ -79,41 +79,41 @@ watercourses: "https://storage.googleapis.com/carbonlens-bucket/v1/senegal/maps/
 carbon_classes:
   - order: 1
     min: 0
-    max: 5
+    max: 3
     color: "#210133"
     name: "OL"
     meaning: "Open Land"
     description: "Zone défrichée, couverte d'herbes ou de cultures, avec très peu de végétation ligneuse."
   - order: 2
-    min: 5
-    max: 10
+    min: 3
+    max: 6
     color: "#3E3A82"
     name: "S"
     meaning: "Scrub"
     description: "Zone anciennement forestière, dominée par arbustes, herbes et faible couvert végétal."
   - order: 3
-    min: 10
-    max: 15
+    min: 6
+    max: 9
     color: "#257A8B"
     name: "YRF"
     meaning: "Young Regenerating Forest"
     description: "Forêt perturbée en cours de régénération, dominée par des arbres jeunes (10–30 cm) et des espèces pionnières."
   - order: 4
-    min: 15
-    max: 20
+    min: 9
+    max: 12
     color: "#66BB6A"
     name: "LDF"
     meaning: "Low Density Forest"
     description: "Forêt à couvert ouvert, avec moins d'arbres matures et une biomasse plus faible, souvent plus perturbée."
   - order: 5
-    min: 20
-    max: 25
+    min: 12
+    max: 15
     color: "#27A97D"
     name: "MDF"
     meaning: "Medium Density Forest"
     description: "Forêt à couvert partiellement ouvert, avec mélange d'arbres matures et jeunes, et une biomasse intermédiaire."
   - order: 6
-    min: 25
+    min: 15
     max: "Infinity"
     color: "#1B5E20"
     name: "HDF"
