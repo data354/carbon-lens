@@ -1,3 +1,11 @@
+export type CarbonClassKey =
+  | "hdf"
+  | "mdf"
+  | "ldf"
+  | "yrf"
+  | "s"
+  | "ol";
+
 export interface CarbonClass {
   order: number;
   min: number;

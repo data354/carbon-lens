@@ -15,7 +15,7 @@ export function GlobalReportSheetContent() {
   return (
     <SheetContent
       side="right"
-      className="w-full gap-0 overflow-y-auto sm:max-w-[770px]"
+      className="w-full gap-0 overflow-y-auto sm:max-w-200"
     >
       <SheetHeader className="border-b border-[#F0F0F0] px-10">
         <SheetTitle className="text-2xl font-semibold">
