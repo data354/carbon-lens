@@ -1,4 +1,4 @@
-env: production
+env: staging
 
 cors:
   local:
@@ -119,3 +119,7 @@ carbon_classes:
     name: "HDF"
     meaning: "High Density Forest"
     description: "Forêt naturelle à couvert fermé, avec forte biomasse et arbres matures (>30 cm), dominée par des espèces stables."
+
+pixel_size_m: 10
+m2_to_ha: 1e-4
+ha_to_km2: 1e-2

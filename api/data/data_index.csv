@@ -1,5 +1,5 @@
-date,res,country,url,carbon_mean,land_area
-2025-01,10m,senegal,https://storage.googleapis.com/carbonlens-bucket/v1/senegal/maps/carbon_pred_2025-01_10m_COG.tif,29.59,13.51
-2023-01,10m,senegal,https://storage.googleapis.com/carbonlens-bucket/v1/senegal/maps/carbon_pred_2023-01_10m_COG.tif,27.25,13.51
-2024-01,10m,senegal,https://storage.googleapis.com/carbonlens-bucket/v1/senegal/maps/carbon_pred_2024-01_10m_COG.tif,26.40,13.51
-2026-01,10m,senegal,https://storage.googleapis.com/carbonlens-bucket/v1/senegal/maps/carbon_pred_2026-01_10m_COG.tif,26.28,13.51
+date,res,country,url,biomass_mean,carbon_mean,tco2e_mean,land_area,ol,s,yrf,ldf,mdf,hdf,total
+2023-01,10m,senegal,https://storage.googleapis.com/carbonlens-bucket/v1/senegal/maps/carbon_pred_2023-01_10m_COG.tif,12.96,6.09,22.33,13.51,749660840,664016627,284781285,221143809,275209301,118009867,2312821729
+2024-01,10m,senegal,https://storage.googleapis.com/carbonlens-bucket/v1/senegal/maps/carbon_pred_2024-01_10m_COG.tif,11.72,5.51,20.21,13.51,866940871,657201631,256223848,218539890,232605875,81309614,2312821729
+2025-01,10m,senegal,https://storage.googleapis.com/carbonlens-bucket/v1/senegal/maps/carbon_pred_2025-01_10m_COG.tif,12.15,5.71,20.94,13.51,836229010,651051098,255905418,224480423,258404837,86750943,2312821729
+2026-01,10m,senegal,https://storage.googleapis.com/carbonlens-bucket/v1/senegal/maps/carbon_pred_2026-01_10m_COG.tif,12.04,5.66,20.76,13.51,887931957,582436310,261460250,244882487,254831620,81279105,2312821729

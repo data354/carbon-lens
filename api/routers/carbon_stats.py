@@ -6,7 +6,9 @@ from typing import Annotated, Union
 from fastapi import APIRouter, HTTPException, File, UploadFile, Query
 import models as models
 from utils.date_utils import DATA_INDEX, get_two_closest_dates
-from utils.raster_utils import AmbiguousCRSError, extract_carbon_stats, url_for_date
+from utils.raster_utils import (
+    AmbiguousCRSError, extract_carbon_stats, url_for_date, build_carbon_classes
+)
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -39,10 +41,14 @@ def get_national_stats(date: str):
             row = DATA_INDEX.loc[DATA_INDEX["date"] == d]
             if row.empty:
                 raise HTTPException(status_code=404, detail=f"No data found for date {d}")
+            row0 = row.iloc[0]
             return models.NationalStats(
-                carbon_mean=float(row.iloc[0]["carbon_mean"]),
-                land_area=float(row.iloc[0]["land_area"]),
-                date=d
+                biomass_mean=float(row0["biomass_mean"]),
+                carbon_mean=float(row0["carbon_mean"]),
+                tco2e_mean=float(row0["tco2e_mean"]),
+                land_area=float(row0["land_area"]),
+                date=d,
+                carbon_classes=build_carbon_classes(row0),
             )
 
         current = build_stat(closest_dates[-1])

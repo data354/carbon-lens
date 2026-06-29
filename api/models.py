@@ -118,11 +118,30 @@ class CarbonStatsRequest(BaseModel):
     geometry: GeometryInput
     date: str
 
+class CarbonClassDetail(BaseModel):
+    """ Details for a carbon density class. """
+    count: int
+    ha: float
+    squareKm: float
+    pct: float
+
+class CarbonClasses(BaseModel):
+    """ Carbon density classes breakdown. """
+    ol: CarbonClassDetail
+    s: CarbonClassDetail
+    yrf: CarbonClassDetail
+    ldf: CarbonClassDetail
+    mdf: CarbonClassDetail
+    hdf: CarbonClassDetail
+
 class NationalStats(BaseModel):
     """ National statistics for a specific date. """
+    biomass_mean: float
     carbon_mean: float
+    tco2e_mean: float
     land_area: float
     date: str
+    carbon_classes: CarbonClasses
 
 class NationalStatsPair(BaseModel):
     """ Pair of national statistics for current and previous periods. """

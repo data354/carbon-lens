@@ -14,7 +14,7 @@ from shapely.coordinates import get_coordinates
 from shapely.geometry import shape
 from shapely.ops import transform as shapely_transform
 
-from core.config import DATA_INDEX_PATH, NODATA
+from core.config import DATA_INDEX_PATH, NODATA, PIXEL_AREA_HA, HA_TO_KM2
 
 logger = logging.getLogger(__name__)
 
@@ -290,3 +290,21 @@ def extract_carbon_stats(raster_url: str, geojson_data: dict) -> dict:
     except Exception as e:
         logger.exception("Unexpected error in extract_carbon_stats: %s", e)
         raise ValueError(f"Error extracting carbon stats: {e}") from e
+
+def pixel_count_to_area(pixel_count: float, total=2312821729) -> dict:
+    """ Convert a pixel count into hectares and square kilometers."""
+    ha = pixel_count * PIXEL_AREA_HA
+    pct = (pixel_count / total * 100)
+    return {
+        "count": int(pixel_count),
+        "ha": round(ha, 2),
+        "squareKm": round(ha * HA_TO_KM2, 2),
+        "pct": round(pct, 2),
+    }
+
+def build_carbon_classes(row, class_pixel_columns = ["ol", "s", "yrf", "ldf", "mdf", "hdf"]) -> dict:
+    """ Build the carbon_classes dict from a data row. """
+    return {
+        col_name: pixel_count_to_area(float(row[col_name]))
+        for col_name in class_pixel_columns
+    }

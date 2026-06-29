@@ -103,3 +103,9 @@ colormap_dict[255] = CARBON_CLASSES[-1]["color"]  # HDF
 colormap_json = json.dumps(colormap_dict, separators=(",", ":"))
 colormap = urllib.parse.quote(colormap_json)
 WATERCOURSES_COLORMAP = '{"1":[210,231,234,255]}'
+
+# Pixel size and area conversions
+PIXEL_SIZE_M = float(config.get("pixel_size_m", 10))
+M2_TO_HA = float(config.get("m2_to_ha", 1e-4))
+HA_TO_KM2 = float(config.get("ha_to_km2", 1e-2))
+PIXEL_AREA_HA = (PIXEL_SIZE_M ** 2) * M2_TO_HA
