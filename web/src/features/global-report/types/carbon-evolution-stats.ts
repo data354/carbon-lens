@@ -1,6 +1,6 @@
-import { GlobalReportStats } from "./stats";
+import { GlobalReportStatsProps } from "./stats";
 
 export type CarbonEvolutionStats = Pick<
-  GlobalReportStats,
+  GlobalReportStatsProps,
   "carbonMean"
 >;
