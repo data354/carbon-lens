@@ -289,7 +289,7 @@ export function CarbonMap({
               minzoom={MIN_LAYER_ZOOM}
               paint={{
                 "raster-opacity": RASTER_OPACITY,
-                "raster-resampling": "nearest",
+                "raster-resampling": "linear",
               }}
             />
           </Source>
