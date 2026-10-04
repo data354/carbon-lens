@@ -4,8 +4,8 @@ A platform for exploring, visualizing, and analyzing high-resolution carbon stoc
 
 This mono-repository contains the system applications :
 
-- [`api`](./api/) : Exposes geospatial endpoints to interact with carbon stock prediction maps at multiple administrative levels (regions, departments, communes, protected areas) for Senegal. It serves map tiles, GeoJSON boundaries, carbon statistics, file exports, and more ;
+- [`api`](./apps/api/) : Exposes geospatial endpoints to interact with carbon stock prediction maps at multiple administrative levels (regions, departments, communes, protected areas) for Senegal. It serves map tiles, GeoJSON boundaries, carbon statistics, file exports, and more ;
 
-- [`web`](./web/) : The full-stack application developed in Next.js ;
+- [`web`](./apps/web/) : The full-stack application developed in Next.js ;
 
-- [`modeling`](./modeling/) : Carbon stock modeling pipeline, from field data to the COG map served via API.
+- [`modeling`](./apps/modeling/) : Carbon stock modeling pipeline, from field data to the COG map served via API.

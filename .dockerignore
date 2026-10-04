@@ -1,0 +1,25 @@
+# Deps
+node_modules/
+
+# Docker
+Dockerfile*
+.dockerignore
+
+# Git
+.git
+.gitignore
+LICENSE
+
+# Doc
+README.md
+
+# Editor
+.vscode
+.editorconfig
+.idea
+
+# Test
+coverage*
+
+# web
+apps/web/src/generated/prisma

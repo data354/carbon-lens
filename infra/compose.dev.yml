@@ -1,0 +1,40 @@
+name: carbon-lens-dev
+
+services:
+  app-postgres:
+    image: postgres:13.22-alpine3.21
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: carbon_lens_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - app-pgsql-data:/var/lib/postgresql/data
+    networks:
+      - carbon-lens-net
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
+    depends_on:
+      app-postgres:
+        condition: service_healthy
+    networks:
+      - carbon-lens-net
+
+networks:
+  carbon-lens-net:
+    external: true
+
+volumes:
+  app-pgsql-data:
+    driver: local
