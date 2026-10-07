@@ -1,4 +1,4 @@
-env: staging
+env: production
 
 cors:
   local:
@@ -16,6 +16,11 @@ cors:
     - "http://127.0.0.1:3000"
     - "https://carbon-lens-app-staging-707753137274.us-central1.run.app"
     - "https://carbon-lens-app-707753137274.us-central1.run.app"
+
+docs:
+  local: public
+  staging: public
+  production: disabled
 
 api_description: |
   This API provides access to high-resolution Senegal Carbon Stock Maps generated using machine learning and multi-source satellite data (Sentinel-1, Sentinel-2, DEM) combined with field observations.

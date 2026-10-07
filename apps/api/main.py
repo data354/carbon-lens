@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from core.config import API_DESCRIPTION, ORIGINS, ROUTER_PREFIXES
+from core.config import API_DESCRIPTION, DOCS_MODE, ORIGINS, ROUTER_PREFIXES
 import models as models
 from routers import (
     carbon_stats, catalog, files,
@@ -15,7 +15,10 @@ app = FastAPI(
     title="CarbonLens API",
     description=API_DESCRIPTION,
     version="0.1",
-    root_path="/api"
+    root_path="/api",
+    openapi_url="/openapi.json" if DOCS_MODE == "public" else None,
+    docs_url="/docs" if DOCS_MODE == "public" else None,
+    redoc_url="/redoc" if DOCS_MODE == "public" else None,
 )
 
 # CORS
@@ -40,7 +43,8 @@ async def root():
     """ Health Check of the API. """
     return {
         "status": "ok",
-        "message": "Welcome to the CarbonLens API! Visit /docs or /redoc for API documentation.",
+        "message": "Welcome to the CarbonLens API!" + (
+            " Visit /docs or /redoc for API documentation." if DOCS_MODE == "public" else ""),
         "routes": list(ROUTER_PREFIXES.values()),
     }
 

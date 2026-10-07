@@ -32,6 +32,13 @@ cors = config.get("cors", {})
 # Origins for CORS
 ORIGINS = cors.get(ENV) or cors.get("local") or ["*"]
 
+# API docs (Swagger/OpenAPI) access mode
+DOCS_MODES = ("public", "disabled")
+DOCS_MODE = os.getenv("DOCS_MODE", config.get("docs", {}).get(ENV, "disabled")).lower()
+if DOCS_MODE not in DOCS_MODES:
+    logger.warning("Unknown docs mode '%s', disabling API docs", DOCS_MODE)
+    DOCS_MODE = "disabled"
+
 # Router prefixes
 ROUTER_PREFIXES = config.get("router_prefixes", {
     "catalog": "/catalog",

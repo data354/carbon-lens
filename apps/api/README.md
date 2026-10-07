@@ -116,6 +116,7 @@ All configuration is managed via `config.yml` at the root of the project.
 |----|----|
 | `env` | Active environment (`local`, `staging`, `production`) |
 | `cors` | Allowed origins per environment |
+| `docs` | Swagger/OpenAPI access mode per environment (`public`, `disabled`) |
 | `router_prefixes` | URL prefix for each router group |
 | `data_index_path` | URL to the GCS data index CSV |
 | `gcs.bucket` | GCS bucket name |
@@ -126,10 +127,26 @@ All configuration is managed via `config.yml` at the root of the project.
 
 No `.env` file is required — the app reads `config.yml` directly via `core/config.py`.
 
+### API docs access
+
+Swagger UI (`/docs`), ReDoc (`/redoc`) and the OpenAPI schema (`/openapi.json`) are exposed according to the `docs` mode of the active environment:
+
+| Mode | Behaviour |
+|----|----|
+| `public` | Open to everyone (default for `local` and `staging`) |
+| `disabled` | Endpoints return `404` (default for `production`) |
+
+The following environment variables can be set at runtime:
+
+| Variable | Description |
+|----|----|
+| `ENV` | Overrides `env` from `config.yml` |
+| `DOCS_MODE` | Overrides the `docs` mode for the active environment |
+
 
 ## API Endpoints
 
-Once running, interactive documentation is available at:
+Once running, interactive documentation is available at (see [API docs access](#api-docs-access)):
 
 * **Swagger UI** → `http://localhost:8080/docs`
 * **ReDoc** → `http://localhost:8080/redoc`
