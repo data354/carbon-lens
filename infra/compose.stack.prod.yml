@@ -38,6 +38,8 @@ services:
     secrets:
       - gcp-sa-secret
     environment:
+      ENV: production
+      DOCS_MODE: disabled
       GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/gcp-sa-secret
     deploy:
       replicas: 1
