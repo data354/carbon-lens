@@ -34,21 +34,37 @@ COPY data data
 # Final stage
 FROM python:3.12-slim
 
+ARG UID=10001
+ARG GID=10001
+
 # Set working directory in the container
 WORKDIR /app
 
 # Install runtime dependencies only (without build tools)
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget \
     gdal-bin \
     libexpat1 \
     && rm -rf /var/lib/apt/lists/*
 
+# Create a non-root user
+RUN groupadd \
+    --gid ${GID} app \
+    && useradd \
+      --uid ${UID} \
+      --gid app \
+      --shell /usr/sbin/nologin \
+      --no-create-home \
+      app
+
 # Copy installed packages from builder stage
-COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
-COPY --from=builder /app /app
+COPY --from=builder --chown=app:app /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+COPY --from=builder --chown=app:app /app /app
+
+USER app
 
 # Set environment variables
 EXPOSE 8080
 
 # Start FastAPI with Uvicorn
-CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080", "--proxy-headers", "--forwarded-allow-ips=*"]
