@@ -39,6 +39,9 @@ if DOCS_MODE not in DOCS_MODES:
     logger.warning("Unknown docs mode '%s', disabling API docs", DOCS_MODE)
     DOCS_MODE = "disabled"
 
+# Rate limits per client IP and endpoint group
+RATE_LIMITS = config.get("rate_limits", {})
+
 # Router prefixes
 ROUTER_PREFIXES = config.get("router_prefixes", {
     "catalog": "/catalog",

@@ -1,6 +1,7 @@
 fastapi==0.119.0
 geopandas==1.1.2
 google-cloud-storage==3.4.1
+limits==5.8.0
 matplotlib==3.10.7
 numpy==2.3.4
 pandas==2.3.3

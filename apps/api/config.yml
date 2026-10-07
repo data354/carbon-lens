@@ -22,6 +22,13 @@ docs:
   staging: public
   production: disabled
 
+rate_limits:
+  tiles: "1200/minute"
+  geometry: "10/minute"
+  geo: "300/minute"
+  catalog: "300/minute"
+  export: "10/minute"
+
 api_description: |
   This API provides access to high-resolution Senegal Carbon Stock Maps generated using machine learning and multi-source satellite data (Sentinel-1, Sentinel-2, DEM) combined with field observations.
 

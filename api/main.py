@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from core.config import API_DESCRIPTION, DOCS_MODE, ORIGINS, ROUTER_PREFIXES
+from core.rate_limit import RateLimitMiddleware
 import models as models
 from routers import (
     carbon_stats, catalog, files,
@@ -19,6 +20,9 @@ app = FastAPI(
     docs_url="/docs" if DOCS_MODE == "public" else None,
     redoc_url="/redoc" if DOCS_MODE == "public" else None,
 )
+
+# Rate limiting (added before CORS so that 429 responses keep CORS headers)
+app.add_middleware(RateLimitMiddleware)
 
 # CORS
 app.add_middleware(

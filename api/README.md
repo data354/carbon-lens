@@ -117,6 +117,7 @@ All configuration is managed via `config.yml` at the root of the project.
 | `env` | Active environment (`local`, `staging`, `production`) |
 | `cors` | Allowed origins per environment |
 | `docs` | Swagger/OpenAPI access mode per environment (`public`, `disabled`) |
+| `rate_limits` | Requests allowed per client IP for each endpoint group |
 | `router_prefixes` | URL prefix for each router group |
 | `data_index_path` | URL to the GCS data index CSV |
 | `gcs.bucket` | GCS bucket name |
@@ -142,6 +143,22 @@ The following environment variables can be set at runtime:
 |----|----|
 | `ENV` | Overrides `env` from `config.yml` |
 | `DOCS_MODE` | Overrides the `docs` mode for the active environment |
+
+### Rate limiting
+
+Requests are limited per client IP in every environment. Limits are set in `config.yml` (`rate_limits`) using the [limits](https://limits.readthedocs.io/en/stable/quickstart.html#rate-limit-string-notation) notation (e.g. `10/minute`; combine several with `;`).
+
+| Group | Endpoints | Default |
+|----|----|----|
+| `tiles` | `/tiles/*` | `1200/minute` |
+| `geometry` | `/tiles/stats/geometry` | `10/minute` |
+| `geo` | `/geo/*` | `300/minute` |
+| `catalog` | `/catalog/*` | `300/minute` |
+| `export` | `/files/download` | `10/minute` |
+
+Over the limit, the API returns `429 Too Many Requests` with a `Retry-After` header. Counters are kept in memory, per process: with several workers or replicas, move them to a shared storage (e.g. Redis).
+
+Behind a reverse proxy, the client IP is read from `X-Forwarded-For`. The proxy must overwrite this header with the real client IP (see `infra/nginx/nginx.conf`), otherwise clients can spoof it.
 
 
 ## API Endpoints
