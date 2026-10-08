@@ -12,7 +12,7 @@ def build_file_path(zone: str, date: str) -> str:
 
 def get_blob(bucket_name: str, file_path: str) -> storage.Blob:
     """Get a blob from a bucket."""
-    client = storage.Client()
+    client = storage.Client.create_anonymous_client()
     bucket = client.bucket(bucket_name)
     blob = bucket.blob(file_path)
 
