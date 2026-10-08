@@ -6,12 +6,12 @@ from titiler.core.factory import TilerFactory
 from core.config import (
     colormap, VMIN, VMAX, ZOOM_MIN, ZOOM_MAX, WATERCOURSES_TIF, WATERCOURSES_COLORMAP
 )
-from core.dependencies import color_map_params
+from core.dependencies import color_map_params, dataset_path_params
 import models as models
 from utils.raster_utils import url_for_date
 
 router = APIRouter()
-tiler = TilerFactory(colormap_dependency=color_map_params)
+tiler = TilerFactory(colormap_dependency=color_map_params, path_dependency=dataset_path_params)
 
 
 @router.get("/tilejson/{date}", response_model=models.TileJSONResponse)

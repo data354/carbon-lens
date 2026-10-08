@@ -1,10 +1,26 @@
 """ Dependency module for handling colormap parameters for TiTiler (Titiler Docs). """
 import json
-from typing import Dict, Literal, Optional
+from typing import Annotated, Dict, Literal, Optional
 from fastapi import HTTPException, Query
 import matplotlib.colors
 import numpy
 from rio_tiler.colormap import parse_color, cmap as default_cmap
+
+from core.config import WATERCOURSES_TIF
+from utils.raster_utils import DATA_INDEX
+
+# Rasters served by the tiler: the dated carbon maps and the watercourses layer
+ALLOWED_DATASET_URLS = frozenset(DATA_INDEX["url"]) | {WATERCOURSES_TIF}
+
+
+def dataset_path_params(url: Annotated[str, Query(description="Dataset URL")]) -> str:
+    """
+    Only allow the project rasters, so that the tiler cannot be used
+    to fetch arbitrary URLs or local files.
+    """
+    if url not in ALLOWED_DATASET_URLS:
+        raise HTTPException(status_code=400, detail="Dataset URL not allowed.")
+    return url
 
 
 def color_map_params(
