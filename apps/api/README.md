@@ -160,6 +160,50 @@ Over the limit, the API returns `429 Too Many Requests` with a `Retry-After` hea
 
 Behind a reverse proxy, the client IP is read from `X-Forwarded-For`. The proxy must overwrite this header with the real client IP (see `infra/nginx/nginx.conf`), otherwise clients can spoof it.
 
+### Access and export logging
+
+Every request is logged as one JSON line on stdout (logger `carbonlens.access`), to detect abnormal usage. Application logs stay on stderr. Uvicorn's own access log is disabled in the Docker image (`--no-access-log`).
+
+| Field | Description |
+|----|----|
+| `ts` | UTC timestamp |
+| `level` | `INFO`, `WARNING` (rate limited) or `ERROR` (status ≥ 500) |
+| `event` | `access`, `data_export` (`/files/download`, `/tiles/stats/geometry`) or `rate_limited` (429) |
+| `client_ip` | Client IP (see rate limiting above) |
+| `method`, `path`, `query` | Request (query truncated to 1024 characters) |
+| `group` | Endpoint group (`tiles`, `geometry`, `geo`, `catalog`, `export`) or `null` |
+| `status`, `duration_ms` | Response status and duration, until the last byte is sent |
+| `bytes_sent` | Response bytes handed to the server (may exceed what an interrupted client received) |
+| `complete` | `false` if the response was interrupted (client disconnected, error) |
+| `request_bytes` | Request body size (uploaded GeoJSON) |
+| `user_agent`, `referer` | Request headers |
+| `params` | Parsed query parameters, for exports only (e.g. `zone`, `date`) |
+
+Examples of queries on the production stack (`jq` required):
+
+```bash
+# Logs of the last 24 hours, JSON only
+api_logs() { docker service logs --since 24h carbon-lens_api 2>&1 | sed -n 's/^[^{]*//p'; }
+
+# Exports per client IP
+api_logs | jq -r 'select(.event == "data_export") | .client_ip' | sort | uniq -c | sort -rn | head
+
+# Exported volume per client IP
+api_logs | jq -s 'map(select(.event == "data_export")) | group_by(.client_ip)
+  | map({client_ip: .[0].client_ip, exports: length, bytes: (map(.bytes_sent) | add)}) | sort_by(-.bytes)'
+
+# Rate limited clients, per endpoint group
+api_logs | jq -r 'select(.event == "rate_limited") | "\(.client_ip) \(.group)"' | sort | uniq -c | sort -rn
+
+# Tiles rendered from a raster outside the project bucket
+api_logs | jq -c 'select(.group == "tiles" and (.query | test("url=")) and (.query | test("carbonlens-bucket") | not))'
+
+# Server errors
+api_logs | jq -c 'select(.level == "ERROR")'
+```
+
+Logs contain IP addresses (personal data). In production they are kept by the Docker `json-file` driver, rotated at 5 files of 50 MB per container (see `infra/compose.stack.prod.yml`).
+
 
 ## API Endpoints
 

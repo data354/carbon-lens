@@ -2,6 +2,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from core.access_log import AccessLogMiddleware
 from core.config import API_DESCRIPTION, DOCS_MODE, ORIGINS, ROUTER_PREFIXES
 from core.rate_limit import RateLimitMiddleware
 import models as models
@@ -33,6 +34,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Access and data export logging (added last so that it sees every response, 429 included)
+app.add_middleware(AccessLogMiddleware)
 
 @app.get(
     "/",
