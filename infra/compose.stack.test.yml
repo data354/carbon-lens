@@ -30,8 +30,6 @@ services:
       - ${API_PORT}
     env_file:
       - ../apps/api/.env
-    volumes:
-      - ../apps/api/secrets:/app/secrets:ro
     networks:
       - base-net
 
