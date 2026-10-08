@@ -38,7 +38,6 @@ COPY --from=deps /app/apps/web/node_modules ./apps/web/node_modules
 COPY apps/web/prisma ./apps/web/prisma
 COPY apps/web/public ./apps/web/public
 COPY apps/web/next.config.ts ./apps/web/next.config.ts
-COPY apps/web/next-env.d.ts ./apps/web/next-env.d.ts
 COPY apps/web/postcss.config.mjs ./apps/web/postcss.config.mjs
 COPY apps/web/tsconfig.json ./apps/web/tsconfig.json
 COPY apps/web/src ./apps/web/src
