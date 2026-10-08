@@ -1,7 +1,7 @@
 """ Files routers for downloading files."""
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import StreamingResponse
 from google.api_core.exceptions import NotFound
 
@@ -21,7 +21,7 @@ router = APIRouter()
         500: {"description": "Internal server error while downloading file"},
     },
 )
-def download_file(query: Annotated[FileQuery, Depends()]):
+def download_file(query: Annotated[FileQuery, Query()]):
     """Download a CSV file from GCS based on zone and date."""
     file_path = build_file_path(query.zone, query.date)
 
