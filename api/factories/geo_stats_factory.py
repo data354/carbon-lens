@@ -95,7 +95,6 @@ def make_geo_stats_router(
                 raise HTTPException(status_code=404, detail=f"Date {date} not found in catalog")
 
             stats_dict = get_geo_stats(name, balanced_dates)
-            print(stats_dict)
 
             if not stats_dict:
                 entity_type = base[:-1] if base.endswith('s') else base

@@ -42,7 +42,6 @@ def color_map_params(
                 colormap,
                 object_hook=lambda x: {int(k): parse_color(v) for k, v in x.items()}
             )
-            print(cm)
         except json.JSONDecodeError as err:
             raise HTTPException(
                 status_code=400, detail="Parsing colormap JSON string failed."
